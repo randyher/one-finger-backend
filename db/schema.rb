@@ -10,10 +10,45 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_19_154104) do
+ActiveRecord::Schema.define(version: 2019_11_26_183817) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "game_genres", force: :cascade do |t|
+    t.string "name"
+    t.bigint "game_id"
+    t.bigint "genre_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["game_id"], name: "index_game_genres_on_game_id"
+    t.index ["genre_id"], name: "index_game_genres_on_genre_id"
+  end
+
+  create_table "games", force: :cascade do |t|
+    t.string "title"
+    t.string "img"
+    t.string "released"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "games_reviews", force: :cascade do |t|
+    t.string "content"
+    t.integer "starts"
+    t.bigint "user_id"
+    t.bigint "game_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["game_id"], name: "index_games_reviews_on_game_id"
+    t.index ["user_id"], name: "index_games_reviews_on_user_id"
+  end
+
+  create_table "genres", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "username"
